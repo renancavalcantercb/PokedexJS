@@ -34,7 +34,7 @@ const typeColors = {
   grass: "#7AC74C",
   ice: "#96D9D6",
   fighting: "#C22E28",
-  poison: "#A33EA1",
+  poison: "#A33EG1",
   ground: "#E2BF65",
   flying: "#A98FF3",
   psychic: "#F95587",
@@ -90,7 +90,7 @@ const displayPokemonList = (pokemonList, handleSearch) => (
             }.gif`}
           style={{ width: "100px", height: "100px", marginTop: "12px" }}
         />
-          }
+      }
     >
       <Card.Meta
         title={capitalizeWords(pokemon.name)}
@@ -116,23 +116,20 @@ const pokemonDetails = (selectedPokemon, handleClear, toggleFavorite, starIcon) 
       style={{
         width: 300,
         margin: "12px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
         backgroundColor: getTypeColor(selectedPokemon.types[0].type.name)
       }}
     >
       <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-        <button onClick={toggleFavorite} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
+        <button onClick={toggleFavorite} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer', fontSize:"22px" }}>
           {starIcon}
         </button>
       </div>
       <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "12px" }}>
-      <img
-        alt={selectedPokemon.name}
-        src={pokemonGifUrl + selectedPokemon.name + '.gif'}
-        style={{ width: "150px", height: "150px", margin: "auto" }}
-      />
+        <img
+          alt={selectedPokemon.name}
+          src={pokemonGifUrl + selectedPokemon.name + '.gif'}
+          style={{ width: "150px", height: "150px", margin: "auto" }}
+        />
       </div>
       <Card.Meta
         title={<span style={{ color: textColor }}>{capitalizeWords(selectedPokemon.name) + ' Nº' + selectedPokemon.id}</span>}
@@ -146,9 +143,11 @@ const pokemonDetails = (selectedPokemon, handleClear, toggleFavorite, starIcon) 
         }
         style={{ textAlign: "center" }}
       />
-      <Button type="primary" onClick={handleClear} style={{ marginTop: "12px", width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%"}}>
+      <Button type="primary" onClick={handleClear} style={{width: "50%" }}>
         Back
       </Button>
+      </div>
     </Card>
   )
 }
