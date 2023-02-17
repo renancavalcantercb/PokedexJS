@@ -34,7 +34,7 @@ const typeColors = {
   grass: "#7AC74C",
   ice: "#96D9D6",
   fighting: "#C22E28",
-  poison: "#A33EG1",
+  poison: "#C576F6",
   ground: "#E2BF65",
   flying: "#A98FF3",
   psychic: "#F95587",
@@ -110,6 +110,7 @@ const displayPokemonList = (pokemonList, handleSearch) => (
 
 const pokemonDetails = (selectedPokemon, handleClear, toggleFavorite, starIcon) => {
   const textColor = getTextColor(selectedPokemon);
+  console.log(getTypeColor(selectedPokemon.types[0].type.name))
   return (
     <Card
       key={selectedPokemon.name}
