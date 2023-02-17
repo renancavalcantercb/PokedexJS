@@ -110,7 +110,6 @@ const displayPokemonList = (pokemonList, handleSearch) => (
 
 const pokemonDetails = (selectedPokemon, handleClear, toggleFavorite, starIcon) => {
   const textColor = getTextColor(selectedPokemon);
-  console.log(getTypeColor(selectedPokemon.types[0].type.name))
   return (
     <Card
       key={selectedPokemon.name}
