@@ -219,30 +219,22 @@ function Pokedex() {
   };
 
   const toggleFavorite = () => {
-    if (!favorited) {
-      setFavorited(true);
-      toast.success("Pokemon added to favorites!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      setFavorited(false);
-      toast.error("Pokemon removed from favorites!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
+    setFavorited(!favorited);
+    const toastStatus = favorited ? "error" : "success";
+    const toastText = favorited ? "Pokemon <strong>removed</strong> from favorites!" : "Pokemon <strong>added</strong> to favorites!";
+    toast[toastStatus](
+      <div dangerouslySetInnerHTML={{ __html: toastText }} />,
+      toastText, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined
+    });
   };
+  
 
   return (
     <>
