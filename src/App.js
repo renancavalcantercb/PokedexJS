@@ -6,6 +6,8 @@ import { BiStar } from 'react-icons/bi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import FavoriteButton from './components/favorites/Favorites.js';
+
 
 const paginationBar = (currentPage, setCurrentPage, totalPokemon) => (
   <div style={{ justifyContent: "center", display: "flex" }}>
@@ -22,7 +24,7 @@ const displayError = (error) => (
   <Alert
     message={error}
     type="error"
-    style={{ width: "350px", margin: "12px" }}
+    style={{ width: "350px"}}
   />
 )
 
@@ -108,9 +110,8 @@ const displayPokemonList = (pokemonList, handleSearch) => (
   ))
 )
 
-const pokemonDetails = (selectedPokemon, handleClear, toggleFavorite, starIcon) => {
+const pokemonDetails = (selectedPokemon, handleClear, handleToggleFavorite, starIcon) => {
   const textColor = getTextColor(selectedPokemon);
-  console.log(getTypeColor(selectedPokemon.types[0].type.name))
   return (
     <Card
       key={selectedPokemon.name}
@@ -121,9 +122,12 @@ const pokemonDetails = (selectedPokemon, handleClear, toggleFavorite, starIcon) 
       }}
     >
       <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-        <button onClick={toggleFavorite} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer', fontSize:"22px" }}>
+        {/* <button onClick={toggleFavorite} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer', fontSize:"22px" }}>
           {starIcon}
-        </button>
+        </button> */}
+        <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
+          <FavoriteButton onToggle={handleToggleFavorite} />
+        </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "12px" }}>
         <img
@@ -144,10 +148,10 @@ const pokemonDetails = (selectedPokemon, handleClear, toggleFavorite, starIcon) 
         }
         style={{ textAlign: "center" }}
       />
-      <div style={{ display: "flex", justifyContent: "center", width: "100%"}}>
-      <Button type="primary" onClick={handleClear} style={{width: "50%" }}>
-        Back
-      </Button>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <Button type="primary" onClick={handleClear} style={{ width: "50%" }}>
+          Back
+        </Button>
       </div>
     </Card>
   )
@@ -162,8 +166,18 @@ function Pokedex() {
   const [totalPokemon, setTotalPokemon] = useState(0);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [favorited, setFavorited] = useState(false);
-  const starIcon = favorited ? <FaStar /> : <BiStar />;
+  const [starIcon, setStarIcon] = useState(<BiStar />);
+
+  const handleToggleFavorite = (newFavorite) => {
+    if (newFavorite) {
+      setStarIcon(<FaStar />);
+      toast.success(`Added ${selectedPokemon.name} to favorites`);
+    } else {
+      setStarIcon(<BiStar />);
+      toast.success(`Removed ${selectedPokemon.name} from favorites`);
+    }
+  }
+
 
   useEffect(() => {
     const fetchPokemonList = async () => {
@@ -172,7 +186,6 @@ function Pokedex() {
         setPokemonList(response.data.results);
         setError(null);
       } catch (error) {
-        console.error(error);
         setError("Failed to fetch Pokemon list");
       }
     };
@@ -190,7 +203,6 @@ function Pokedex() {
         setTotalPokemon(response.data.count);
         setPageLoaded(true);
       } catch (error) {
-        console.error(error);
         setError("Failed to fetch Pokemon list");
       }
     };
@@ -206,10 +218,12 @@ function Pokedex() {
       const response = await axios.get(`${POKEMON_API_URL}${pokemonName}`);
       setSelectedPokemon(response.data);
       setError(null);
+      return true;
     } catch (error) {
-      console.error(error);
+      setPokemonList([]);
       setError("Pokemon not found");
       setSelectedPokemon(null);
+      return false;
     }
   };
 
@@ -217,25 +231,9 @@ function Pokedex() {
     setSearch("");
     setError(null);
     setSelectedPokemon(null);
+    setCurrentPage(1);
+    pageLoaded && setPageLoaded(false);
   };
-
-  const toggleFavorite = () => {
-    setFavorited(!favorited);
-    const toastStatus = favorited ? "error" : "success";
-    const toastText = favorited ? "Pokemon <strong>removed</strong> from favorites!" : "Pokemon <strong>added</strong> to favorites!";
-    toast[toastStatus](
-      <div dangerouslySetInnerHTML={{ __html: toastText }} />,
-      toastText, {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined
-    });
-  };
-  
 
   return (
     <>
@@ -288,10 +286,11 @@ function Pokedex() {
       >
         {error && displayError(error)}
 
-        {selectedPokemon ? pokemonDetails(selectedPokemon, handleClear, toggleFavorite, starIcon) : displayPokemonList(pokemonList, handleSearch)}
+        {selectedPokemon ? pokemonDetails(selectedPokemon, handleClear, handleToggleFavorite, starIcon) : displayPokemonList(pokemonList, handleSearch)}
 
       </div>
-      {!selectedPokemon && paginationBar(currentPage, setCurrentPage, totalPokemon)}
+      {/* only render paginationBar if selectedPokemon is false and setError is not null */}
+      {!selectedPokemon && !error && paginationBar(currentPage, setCurrentPage, totalPokemon)}
     </>
   );
 }
