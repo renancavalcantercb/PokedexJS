@@ -8,6 +8,7 @@ import '../index.css'
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [paginationSize, setPaginationSize] = useState(15);
 
   const pokemonGifUrl = "https://www.smogon.com/dex/media/sprites/xy/";
 
@@ -17,23 +18,26 @@ function PokemonList() {
     <div style={{ justifyContent: "center", display: "flex" }}>
       <Pagination
         current={currentPage}
-        pageSize={15}
+        pageSize={paginationSize}
         total={1000}
+        pageSizeOptions={["10", "15", "20", "30", "40"]}
+        onShowSizeChange={(current, size) => setPaginationSize(size)}
         onChange={(page) => setCurrentPage(page)}
       />
     </div>
-  )
-
-  const fetchPokemonList = (page) => {
-    const offset = (page - 1) * 15;
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=15&offset=${offset}`)
-      .then((response) => response.json())
-      .then((data) => setPokemonList(data.results));
-  }
+  );
 
   useEffect(() => {
+    const fetchPokemonList = (page) => {
+      const offset = (page - 1) * paginationSize;
+      fetch(`https://pokeapi.co/api/v2/pokemon?limit=${paginationSize}&offset=${offset}`)
+        .then((response) => response.json())
+        .then((data) => setPokemonList(data.results));
+    };
+
     fetchPokemonList(currentPage);
-  }, [currentPage]);
+  }, [currentPage, paginationSize]);
+
 
   return (
     <>
@@ -73,9 +77,5 @@ function PokemonList() {
     </>
   );
 }
-
-
-
-
 
 export default PokemonList;
