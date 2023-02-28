@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Typography, message } from "antd";
 import { capitalizeWords } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
+import FavoriteButton from "./Favorite.js";
 
 function FavoriteList() {
     const [favoritePokemons, setFavoritePokemons] = useState([]);
@@ -34,40 +35,51 @@ function FavoriteList() {
 
 
     return (
-        <div>
-            <Title level={2} style={{ marginTop: "12px", display: "flex", justifyContent: "center" }}>
+        <>
+            <Title level={2} style={{ textAlign: "center" }}>
                 Favorite Pokemons
             </Title>
-            <div style={{ justifyContent: "center", display: "flex" }}>
-                {favoritePokemons.map((pokemon) => (
-                    <Card
-                        key={pokemon.name}
-                        className="pokemon-card"
-                        cover={
-                            <img
-                                alt={pokemon.name}
-                                src={`${pokemonGifUrl}${pokemon.name
-                                    }.gif`}
-                                style={{ width: "100px", height: "100px", marginTop: "12px" }}
-                            />
-                        }
-                    >
-                        <Card.Meta
-                            title={capitalizeWords(pokemon.name)}
-                            description={`Pokemon ID: ${pokemon.id}`}
-                            style={{ textAlign: "center" }}
-                        />
-                        <Button
-                            type="primary"
-                            onClick={() => navigate(`/pokemon/${pokemon.name}`)}
-                            style={{ marginTop: "12px", width: "100%" }}
-                        >
-                            View
-                        </Button>
-                    </Card>
-                ))}
+
+            <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+                    {favoritePokemons.map((pokemon) => (
+                        <>
+                            <Card
+                                key={pokemon.name}
+                                className="pokemon-card"
+                                style={{ width: 200, margin: "12px" }}
+                                cover={
+                                    <div style={{ position: "relative" }}>
+                                        <img
+                                            alt={pokemon.name}
+                                            src={`${pokemonGifUrl}${pokemon.name}.gif`}
+                                            style={{ width: "100px", height: "100px", marginTop: "12px" }}
+                                        />
+                                    </div>
+                                }
+
+                            >
+                                <div style={{ position: "absolute", top: "5%", right: "5%" }}>
+                                    <FavoriteButton pokemon={pokemon} id={pokemon.id} />
+                                </div>
+                                <Card.Meta
+                                    title={capitalizeWords(pokemon.name)}
+                                    description={`Pokemon ID: ${pokemon.id}`}
+                                    style={{ textAlign: "center" }}
+                                />
+                                <Button
+                                    type="primary"
+                                    onClick={() => navigate(`/pokemon/${pokemon.name}`)}
+                                    style={{ marginTop: "12px", width: "100%" }}
+                                >
+                                    View
+                                </Button>
+                            </Card>
+                        </>
+                    ))}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
