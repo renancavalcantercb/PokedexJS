@@ -12,7 +12,7 @@ function App() {
       <>
         <ToastContainer
           position="top-right"
-          autoClose={1500}
+          autoClose={2000}
           pauseOnHover={false}
           closeOnClick
           draggable
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PokemonList />} />
           <Route path="/pokemon/:idOrName" element={<PokemonDetail />} />
-          <Route path="/favorites" element={<FavoriteList />} />  
+          <Route path="/favorites" element={<FavoriteList />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </>
