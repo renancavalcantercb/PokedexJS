@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Typography } from "antd";
+import { Card, Button, Typography, message } from "antd";
 import { capitalizeWords } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ function FavoriteList() {
     const pokemonGifUrl = "https://www.smogon.com/dex/media/sprites/xy/";
     const navigate = useNavigate();
     const { Title } = Typography;
+
 
     useEffect(() => {
         const fetchFavoritePokemons = async () => {
@@ -24,8 +25,13 @@ function FavoriteList() {
             setFavoritePokemons(pokemons);
         };
 
+        if (!favoritePokemons.length && (!localStorage.getItem("favoritePokemon") || localStorage.getItem("favoritePokemon") === "{}")) {
+            return message.info("You don't have any favorite pokemon yet");
+        }
+
         fetchFavoritePokemons();
-    }, []);
+    }, [favoritePokemons.length]);
+
 
     return (
         <div>
