@@ -65,12 +65,13 @@ function SearchBar() {
                 value={searchValue}
                 onChange={onChange}
                 style={{ width: 350 }}
+
                 placeholder="Enter Pokemon name or ID"
             >
                 <Input.Search
-                    allowClear
                     enterButton="Search"
-                    onSearch={searchPokemon}
+                    allowClear
+                    onSearch={value => value ? searchPokemon() : handleClear()}
                 />
             </ AutoComplete>}
         </div>
