@@ -5,7 +5,7 @@ const { Header } = Layout;
 const NavBar = () => {
     return (
         <Header>
-            <Menu mode="horizontal">
+            <Menu mode="horizontal" defaultSelectedKeys={['home']}>
                 <Menu.Item key="home">
                     <Link to="/">Home</Link>
                 </Menu.Item>
