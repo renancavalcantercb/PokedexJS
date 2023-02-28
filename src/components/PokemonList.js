@@ -3,6 +3,7 @@ import { Card, Button, Pagination } from "antd";
 import { capitalizeWords, getIdFromUrl } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 import SearchBar from './SearchBar';
+import '../index.css'
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -37,7 +38,6 @@ function PokemonList() {
   return (
     <>
       <SearchBar />
-
       <div className="body-list">
         <div className="pokemon-list">
           {pokemonList.map((pokemon) => (

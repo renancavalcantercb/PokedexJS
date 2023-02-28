@@ -1,5 +1,6 @@
 import PokemonList from "./components/PokemonList";
 import PokemonDetail from "./components/PokemonDetails";
+import FavoriteList from "./components/FavoriteList";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import NavBar from "./components/NavBar";
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PokemonList />} />
           <Route path="/pokemon/:idOrName" element={<PokemonDetail />} />
+          <Route path="/favorites" element={<FavoriteList />} />  
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </>

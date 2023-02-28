@@ -11,12 +11,12 @@
   .pokemon-card {
     width: calc(20% - 24px);
   }
-}
 
-.pokemon-list {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 1200px;
+  .pokemon-list {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+  }
 }
 
 .body-list {

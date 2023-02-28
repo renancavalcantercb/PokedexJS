@@ -48,7 +48,7 @@ function PokemonDetail() {
                     >
                         <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                             <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-                                <FavoriteButton pokemon={selectedPokemon} />
+                                <FavoriteButton pokemon={selectedPokemon} id={selectedPokemon.id} />
                             </div>
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "12px" }}>
