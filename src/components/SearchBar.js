@@ -1,7 +1,7 @@
 import { Input, AutoComplete } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import './SearchBar.css';
+import '../SearchBar.css';
 
 function SearchBar() {
     const [searchValue, setSearchValue] = useState('');
