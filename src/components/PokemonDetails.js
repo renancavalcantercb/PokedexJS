@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card } from "antd";
+import { Button, Card, Space, Spin } from "antd";
 import { capitalizeWords, getTypeColor, displayError } from "../utils/utils";
 import axios from "axios";
 import FavoriteButton from "./Favorite";
@@ -36,7 +36,9 @@ function PokemonDetail() {
             <SearchBar />
             <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                 {isLoading ? (
-                    <h1>Loading...</h1>
+                    <Space style={{ marginTop: '12px' }}>
+                        <Spin tip="Loading..." size="large"></Spin>
+                    </Space>
                 ) : selectedPokemon ? (
                     <Card
                         key={selectedPokemon.name}
