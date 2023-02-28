@@ -2,6 +2,7 @@ import { Input, AutoComplete } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import '../SearchBar.css';
+import { toast } from 'react-toastify';
 
 function SearchBar() {
     const [searchValue, setSearchValue] = useState('');
@@ -19,6 +20,7 @@ function SearchBar() {
             navigate(`/pokemon/${searchValue}`);
         } else {
             handleClear();
+            toast.warning('Please enter a Pokemon name or ID');
         }
     };
 
