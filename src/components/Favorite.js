@@ -5,22 +5,22 @@ import { toast } from 'react-toastify';
 
 function FavoriteButton({ isFavorite }) {
     const [favorite, setFavorite] = useState(isFavorite);
-    const [mounted, setMounted] = useState(false);
+    const [shouldNotify, setShouldNotify] = useState(false);
 
     useEffect(() => {
-        if (mounted) {
+        if (shouldNotify) {
             if (favorite) {
                 toast.success(`Added to favorites`);
             } else {
                 toast.success(`Removed from favorites`);
             }
-        } else {
-            setMounted(true);
+            setShouldNotify(false);
         }
-    }, [favorite]);
+    }, [favorite, shouldNotify]);
 
     const handleToggleFavorite = () => {
         setFavorite(!favorite);
+        setShouldNotify(true);
     }
 
     return (
