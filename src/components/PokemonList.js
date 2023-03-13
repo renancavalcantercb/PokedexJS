@@ -16,18 +16,26 @@ function PokemonList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const paginationBar = () => (
-    <div style={{ justifyContent: "center", display: "flex" }}>
-      <Pagination
-        current={currentPage}
-        pageSize={paginationSize}
-        total={1000}
-        pageSizeOptions={["10", "15", "20", "30", "40"]}
-        onShowSizeChange={(current, size) => setPaginationSize(size)}
-        onChange={(page) => setCurrentPage(page)}
-      />
-    </div>
-  );
+  const paginationBar = () => {
+    const handlePageChange = (page) => {
+      setCurrentPage(page);
+      window.scrollTo(0, 0);
+    };
+
+    return (
+      <div style={{ justifyContent: "center", display: "flex" }}>
+        <Pagination
+          current={currentPage}
+          pageSize={paginationSize}
+          total={1000}
+          pageSizeOptions={["10", "15", "20", "30", "40"]}
+          onShowSizeChange={(current, size) => setPaginationSize(size)}
+          onChange={handlePageChange}
+        />
+      </div>
+    );
+  };
+
 
   useEffect(() => {
     const fetchPokemonList = (page) => {
