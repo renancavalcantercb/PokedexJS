@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Pagination } from "antd";
 import { capitalizeWords, getIdFromUrl } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import SearchBar from './SearchBar';
 import '../index.css'
 
 function PokemonList() {
-  const [pokemonList, setPokemonList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [paginationSize, setPaginationSize] = useState(15);
+  const { pokemonList } = useSelector((state) => state);
 
   const pokemonGifUrl = "https://www.smogon.com/dex/media/sprites/xy/";
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const paginationBar = () => (
     <div style={{ justifyContent: "center", display: "flex" }}>
@@ -32,11 +34,13 @@ function PokemonList() {
       const offset = (page - 1) * paginationSize;
       fetch(`https://pokeapi.co/api/v2/pokemon?limit=${paginationSize}&offset=${offset}`)
         .then((response) => response.json())
-        .then((data) => setPokemonList(data.results));
+        .then((data) => {
+          dispatch({ type: "SET_POKEMON_LIST", payload: data.results });
+        });
     };
 
     fetchPokemonList(currentPage);
-  }, [currentPage, paginationSize]);
+  }, [currentPage, paginationSize, dispatch]);
 
 
   return (
